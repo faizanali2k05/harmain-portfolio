@@ -8,7 +8,7 @@ import {
   useTransform,
 } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const heroImage =
   "/images/hf_20260509_214932_fe7b542e-34a7-4064-84db-fd70900a52f2 (2).png";
@@ -233,6 +233,63 @@ function SectionHeader({
   );
 }
 
+function VideoCard({
+  video,
+}: {
+  video: { title: string; file: string; tag: string };
+}) {
+  const [playing, setPlaying] = useState(false);
+
+  // Cloudinary auto-thumbnail: video URL ki extension .jpg se badal do
+  const poster = video.file
+    ? video.file.replace(/\.(mp4|webm|mov|m4v)(\?.*)?$/i, ".jpg$2")
+    : "";
+
+  return (
+    <motion.article
+      className="card video-slide rounded-2xl p-2"
+      variants={itemVariants}
+      whileHover={{ y: -12 }}
+    >
+      <div className="video-frame overflow-hidden rounded-2xl">
+        {!video.file ? (
+          <div className="video-placeholder">
+            <span>Add Cloudinary link</span>
+          </div>
+        ) : playing ? (
+          <video
+            className="portfolio-video"
+            autoPlay
+            loop
+            controls
+            playsInline
+            aria-label={video.title}
+          >
+            <source src={video.file} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <button
+            type="button"
+            className="video-thumb"
+            onClick={() => setPlaying(true)}
+            aria-label={`Play ${video.title}`}
+            style={
+              poster
+                ? { backgroundImage: `url("${encodeURI(poster)}")` }
+                : undefined
+            }
+          >
+            <span className="video-play-btn" aria-hidden="true">
+              ▶
+            </span>
+          </button>
+        )}
+      </div>
+    </motion.article>
+  );
+}
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -425,7 +482,7 @@ export default function Home() {
                 >
                   {skills.map((skill) => (
                     <motion.li key={skill} variants={itemVariants}>
-                      â€¢ {skill}
+                      • {skill}
                     </motion.li>
                   ))}
                 </motion.ul>
@@ -444,7 +501,7 @@ export default function Home() {
                 >
                   {interests.map((interest) => (
                     <motion.li key={interest} variants={itemVariants}>
-                      â€¢ {interest}
+                      • {interest}
                     </motion.li>
                   ))}
                 </motion.ul>
@@ -625,33 +682,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             {featuredVideos.map((video) => (
-              <motion.article
-                key={video.title}
-                className="card video-slide rounded-2xl p-2"
-                variants={itemVariants}
-                whileHover={{ y: -12 }}
-              >
-                <div className="video-frame overflow-hidden rounded-2xl">
-                  {video.file ? (
-                    <video
-                      className="portfolio-video"
-                      autoPlay
-                      loop
-                      muted
-                      preload="metadata"
-                      playsInline
-                      aria-label={video.title}
-                    >
-                      <source src={video.file} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <div className="video-placeholder">
-                      <span>Add Cloudinary link</span>
-                    </div>
-                  )}
-                </div>
-              </motion.article>
+              <VideoCard key={video.title} video={video} />
             ))}
           </motion.div>
         </div>
@@ -723,33 +754,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             {moreVideos.map((video) => (
-              <motion.article
-                key={video.title}
-                className="card video-slide rounded-2xl p-2"
-                variants={itemVariants}
-                whileHover={{ y: -12 }}
-              >
-                <div className="video-frame overflow-hidden rounded-2xl">
-                  {video.file ? (
-                    <video
-                      className="portfolio-video"
-                      autoPlay
-                      loop
-                      muted
-                      preload="metadata"
-                      playsInline
-                      aria-label={video.title}
-                    >
-                      <source src={video.file} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <div className="video-placeholder">
-                      <span>Add Cloudinary link</span>
-                    </div>
-                  )}
-                </div>
-              </motion.article>
+              <VideoCard key={video.title} video={video} />
             ))}
           </motion.div>
         </div>

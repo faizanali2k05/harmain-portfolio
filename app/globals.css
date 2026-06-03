@@ -104,6 +104,63 @@ html {
   object-fit: cover;
 }
 
+.video-thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: clamp(220px, 34vh, 420px);
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: rgba(8, 10, 14, 0.9);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: filter 250ms ease;
+}
+
+.video-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.45)
+  );
+  transition: background 250ms ease;
+}
+
+.video-thumb:hover::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.35)
+  );
+}
+
+.video-play-btn {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding-left: 4px;
+  border-radius: 999px;
+  font-size: 1.4rem;
+  color: #0a0c10;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  transition: transform 250ms ease, background 250ms ease;
+}
+
+.video-thumb:hover .video-play-btn {
+  transform: scale(1.08);
+  background: #ffffff;
+}
+
 .video-placeholder {
   display: grid;
   place-items: center;
