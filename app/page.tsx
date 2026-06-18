@@ -828,7 +828,7 @@ export default function Home() {
             >
               <motion.div variants={itemVariants}>
                 <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-                  Email
+                  
                 </p>
                 <motion.a
                   href="mailto:harmainali1503@gmail.com"
@@ -836,15 +836,13 @@ export default function Home() {
                   whileHover={{ x: 8 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  harmainali1503@gmail.com
                 </motion.a>
               </motion.div>
               <motion.div variants={itemVariants}>
                 <p className="text-xs uppercase tracking-[0.3em] text-white/40">
-                  WhatsApp
+                  
                 </p>
                 <motion.a
-                  href="tel:+933122129751"
                   className="mt-2 block text-lg text-white hover:text-accent transition-colors"
                   whileHover={{ x: 8 }}
                   whileTap={{ scale: 0.95 }}
